@@ -1,0 +1,8 @@
+2024-07-22 22:53:15 [DEBUG][org.springframework.web.servlet.DispatcherServlet][traceDebug][108]-> POST "/api/account/checkCode", parameters={}
+2024-07-22 22:53:15 [DEBUG][org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping][getHandler][522]-> Mapped to com.easychat.controller.AccountController#checkcode()
+2024-07-22 22:53:15 [INFO][com.easychat.redis.RedisUtils][logRedisTemplateConfiguration][169]-> RedisTemplate keySerializer: org.springframework.data.redis.serializer.StringRedisSerializer@f557424
+2024-07-22 22:53:15 [INFO][com.easychat.redis.RedisUtils][logRedisTemplateConfiguration][170]-> RedisTemplate valueSerializer: org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer@226f3c45
+2024-07-22 22:53:15 [INFO][com.easychat.redis.RedisUtils][init][177]-> RedisTemplate bean has been successfully injected!
+2024-07-22 22:53:16 [DEBUG][org.springframework.web.servlet.mvc.method.annotation.RequestResponseBodyMethodProcessor][writeWithMessageConverters][268]-> Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/json, application/*+json]
+2024-07-22 22:53:16 [DEBUG][org.springframework.web.servlet.mvc.method.annotation.RequestResponseBodyMethodProcessor][traceDebug][108]-> Writing [com.easychat.entity.vo.ResponseVO@745e0063]
+2024-07-22 22:53:16 [DEBUG][org.springframework.web.servlet.DispatcherServlet][logResult][1131]-> Completed 200 OK
