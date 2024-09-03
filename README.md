@@ -1,4 +1,4 @@
 # EasyChat
-It is chat soft. 
+It is a simple chat software. 
 
-Backend Code
+Backend part. 
