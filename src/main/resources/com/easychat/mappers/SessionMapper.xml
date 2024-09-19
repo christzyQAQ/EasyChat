@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.easychat.mappers.SessionMapper">
+	<!-- 实体映射 -->
+	<resultMap id="base_result_map"
+		type="com.easychat.entity.po.Session">
+		<!-- 会话id -->
+		<result column="session_id" property="sessionId" />
+		<!-- 最后接收的消息 -->
+		<result column="last_message" property="lastMessage" />
+		<!-- 最后接收消息的时间（毫秒） -->
+		<result column="last_recieve_time" property="lastRecieveTime" />
+		<!-- 0:默认不置顶；1：置顶会话 -->
+		<result column="is_pinned" property="isPinned" />
+	</resultMap>
+	<!-- 通用查询结果列 -->
+	<sql id="base_column_list"> session_id,last_message,last_recieve_time,is_pinned </sql>
+	<!-- 基础查询条件 -->
+	<sql id="base_query_condition">
+		<if test="query.sessionId != null and query.sessionId != ''"> and session_id = #{query.sessionId} </if>
+		<if test="query.lastMessage != null and query.lastMessage != ''"> and last_message = #{query.lastMessage} </if>
+		<if test="query.lastRecieveTime != null"> and last_recieve_time = #{query.lastRecieveTime} </if>
+		<if test="query.isPinned != null"> and is_pinned = #{query.isPinned} </if>
+	</sql>
+	<!-- 扩展查询条件 -->
+	<sql id="base_query_condition_extend">
+		<if
+			test="query.sessionIdFuzzy != null and query.sessionIdFuzzy != ''"> and session_id like concat('%', #{query.sessionIdFuzzy}, '%')
+		</if>
+		<if
+			test="query.lastMessageFuzzy != null and query.lastMessageFuzzy != ''"> and last_message like concat('%', #{query.lastMessageFuzzy},
+			'%') </if>
+	</sql>
+	<!-- 通用查询条件 -->
+	<sql id="query_condition">
+		<where>
+			<include refid="base_query_condition" />
+			<include refid="base_query_condition_extend" />
+		</where>
+	</sql>
+	<!-- 查询列表 -->
+	<select id="selectList" resultMap="base_result_map">
+		SELECT
+		<include refid="base_column_list" />
+		FROM chat_session
+		<include refid="query_condition" />
+		<if test="query.orderBy != null and query.orderBy != ''"> order by ${query.orderBy} </if>
+		<if test="query.simplePage != null"> limit #{query.simplePage.start}, #{query.simplePage.end}
+		</if>
+	</select>
+	<!-- 查询数量 -->
+	<select id="selectCount" resultType="java.lang.Integer">
+		SELECT count(1) FROM chat_session
+		<include refid="query_condition" />
+	</select>
+	<!-- 插入（匹配有值的字段） -->
+	<insert id="insert"
+		parameterType="com.easychat.entity.po.Session">
+		<trim prefix="insert into chat_session (" suffix=")"
+			suffixOverrides=",">
+			<if test="bean.sessionId != null"> session_id, </if>
+			<if test="bean.lastMessage != null"> last_message, </if>
+			<if test="bean.lastRecieveTime != null"> last_recieve_time, </if>
+			<if test="bean.isPinned != null"> is_pinned, </if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="bean.sessionId != null"> #{bean.sessionId}, </if>
+			<if test="bean.lastMessage != null"> #{bean.lastMessage}, </if>
+			<if test="bean.lastRecieveTime != null"> #{bean.lastRecieveTime}, </if>
+			<if test="bean.isPinned != null"> #{bean.isPinned}, </if>
+		</trim>
+	</insert>
+	<!-- 插入或者更新（匹配有值的字段） -->
+	<insert id="insertOrUpdate"
+		parameterType="com.easychat.entity.po.Session">
+		<trim prefix="insert into chat_session (" suffix=")"
+			suffixOverrides=",">
+			<if test="bean.sessionId != null"> session_id, </if>
+			<if test="bean.lastMessage != null"> last_message, </if>
+			<if test="bean.lastRecieveTime != null"> last_recieve_time, </if>
+			<if test="bean.isPinned != null"> is_pinned, </if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="bean.sessionId != null"> #{bean.sessionId}, </if>
+			<if test="bean.lastMessage != null"> #{bean.lastMessage}, </if>
+			<if test="bean.lastRecieveTime != null"> #{bean.lastRecieveTime}, </if>
+			<if test="bean.isPinned != null"> #{bean.isPinned}, </if>
+		</trim>
+		<trim prefix="ON DUPLICATE KEY UPDATE" suffix=""
+			suffixOverrides=",">
+			<if test="bean.lastMessage != null"> last_message = VALUES(last_message), </if>
+			<if test="bean.lastRecieveTime != null"> last_recieve_time = VALUES(last_recieve_time), </if>
+			<if test="bean.isPinned != null"> is_pinned = VALUES(is_pinned), </if>
+		</trim>
+	</insert>
+	<insert id="insertBatch"
+		parameterType="com.easychat.entity.po.Session">
+		insert into
+		chat_session(session_id,last_message,last_recieve_time,is_pinned)
+		values
+		<foreach collection="list" item="item" separator=",">
+			(#{item.sessionId},#{item.lastMessage},#{item.lastRecieveTime},#{item.isPinned})
+		</foreach>
+	</insert>
+	<insert id="insertOrUpdateBatch"
+		parameterType="com.easychat.entity.po.Session">
+		insert into
+		chat_session(session_id,last_message,last_recieve_time,is_pinned)
+		values
+		<foreach collection="list" item="item" separator=",">
+			(#{item.sessionId},#{item.lastMessage},#{item.lastRecieveTime},#{item.isPinned})
+		</foreach>
+		ON DUPLICATE KEY UPDATE session_id = VALUES(session_id),last_message =
+		VALUES(last_message),last_recieve_time =
+		VALUES(last_recieve_time),is_pinned = VALUES(is_pinned)
+	</insert>
+	<!-- 根据SessionId查询 -->
+	<select id="selectBySessionId" resultMap="base_result_map">
+		select
+		<include refid="base_column_list" />
+		from chat_session where session_id=#{sessionId}
+	</select>
+	<!-- 根据SessionId更新 -->
+	<update id="updateBySessionId"
+		parameterType="com.easychat.entity.po.Session">
+		update chat_session
+		<set>
+			<if test="bean.sessionId != null"> session_id = #{bean.sessionId}, </if>
+			<if test="bean.lastMessage != null"> last_message = #{bean.lastMessage}, </if>
+			<if test="bean.lastRecieveTime != null"> last_recieve_time = #{bean.lastRecieveTime}, </if>
+			<if test="bean.isPinned != null"> is_pinned = #{bean.isPinned}, </if>
+		</set>
+		where session_id=#{sessionId}
+	</update>
+	<!-- 根据SessionId删除 -->
+	<delete id="deleteBySessionId"> delete from chat_session where
+		session_id=#{sessionId} </delete>
+</mapper>
