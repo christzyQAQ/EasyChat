@@ -92,5 +92,6 @@ public interface SessionUserService {
 	public void pinSession(String userId,String contactId);
 	
 	public void unPinSession(String userId,String contactId);
+	
 
 }

@@ -23,5 +23,7 @@ public interface SessionMapper<T, P> extends BaseMapper {
 	 * 根据SessionId删除
 	 */
 	Integer deleteBySessionId (@Param("sessionId") String sessionId);
+	
+
 
 }

@@ -31,6 +31,7 @@ public class SessionQuery extends BaseQuery {
 	private String sessionIdFuzzy;
 
 	private String lastMessageFuzzy;
+	
 
 
 	public void setSessionId(String sessionId) {
@@ -75,6 +76,9 @@ public class SessionQuery extends BaseQuery {
 	public String getLastMessageFuzzy() {
 		return lastMessageFuzzy;
 	}
+	
+
+	
 
 
 }
