@@ -5,6 +5,9 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+
+import javax.annotation.Resource;
+
 /*
 * @Author Zy 1193263034@qq.com
 * @version 1.0.0
@@ -16,8 +19,8 @@ import org.springframework.stereotype.Component;
 
 public class RedisConnectionChecker<V>{
 	   private static final Logger logger = LoggerFactory.getLogger(RedisConnectionChecker.class);
-	@Autowired 
-	   private  RedisTemplate<String, V> redisTemplate;
+	   @Resource
+	   private  RedisTemplate<String,V> redisTemplate;
 
 	    public void checkRedisConnection() {
 	        try {

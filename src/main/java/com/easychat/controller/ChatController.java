@@ -92,9 +92,9 @@ public class ChatController extends BaseController {
 			@NotEmpty boolean showCover) {
 		TokenUserInfoDto tokenUserInfoDto = getTokenUserInfo(request);
 		OutputStream out = null;
-		FileInputStream in = null;
+		FileInputStream in;
 		try {
-			File file = null;
+			File file;
 			if (StringTools.isNumber(fileId)) {
 				String avatarFolderName = Constants.FILE_FOLDER_FILE + Constants.FILE_FOLDER_AVATAR_NAME;
 				String avatarPath = appConfig.getProjectFloder() + avatarFolderName + fileId + Constants.IMAGE_SUFFIX;
