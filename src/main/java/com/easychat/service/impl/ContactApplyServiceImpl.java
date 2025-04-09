@@ -479,7 +479,7 @@ public class ContactApplyServiceImpl implements ContactApplyService {
 			contactQuery.setContactId(contactId);
 			contactQuery.setStatus(UserContactStatusEnum.FRIEND.getStatus());
 			Integer memberCount=this.contactMapper.selectCount(contactQuery);
-			messageSendDto.setMemmberCount(memberCount);
+			messageSendDto.setMemberCount(memberCount);
 			messageSendDto.setContactName(groupInfo.getGroupName());
 			//发消息
 			messageHandler.sendMessage(messageSendDto);

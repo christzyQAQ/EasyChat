@@ -29,15 +29,13 @@ public class HandlerHeartBeat extends ChannelDuplexHandler{
 	public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
 		if (evt instanceof IdleStateEvent) {
 			IdleStateEvent e =(IdleStateEvent)evt;
-			
 			if (e.state()==IdleState.READER_IDLE) {
 				Channel channel =ctx.channel();
 				Attribute<String> attribute= channel.attr(AttributeKey.valueOf(channel.id().toString()));
 				String userId=attribute.get();
 				logger.info("用户{}心跳超时",userId);
-				ctx.close();
-				
-			}else  if (e.state()==IdleState.READER_IDLE) {
+				ctx.close();		
+			}else  if (e.state()==IdleState.WRITER_IDLE) {
 				ctx.writeAndFlush("heart");
 			}
 		}

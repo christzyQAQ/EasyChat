@@ -40,7 +40,7 @@ import jodd.util.ArraysUtil;
  * @date: 2024-07-21 16:19
  */
 @RestController
-@RequestMapping("/group/")
+@RequestMapping("/contact/")
 public class ContactController extends BaseController {
 
 	@Resource
@@ -99,6 +99,8 @@ public class ContactController extends BaseController {
 		return getSuccessResponseVO(result);
 	}
 
+
+
 	// 获取联系人列表
 	@RequestMapping("loadContact")
 	@GlobalInterceptor
@@ -130,6 +132,19 @@ public class ContactController extends BaseController {
 		List<Contact> contactList = contactService.findListByParam(contactQuery);
 		return getSuccessResponseVO(contactList);
 
+	}
+	@RequestMapping("getContactInfo")
+	@GlobalInterceptor
+	public ResponseVO getContactInfo(HttpServletRequest request, @NotNull String contactId) {
+		TokenUserInfoDto tokenUserInfoDto = getTokenUserInfo(request);
+		Info info = infoService.selectByUserId(contactId);
+		UserInfoVO userInfoVO = CopyTools.copy(info, UserInfoVO.class);
+		userInfoVO.setContractStatus(UserContactStatusEnum.NOT_FRIEND.getStatus());
+		Contact contact = contactService.selectByUserIdAndContactId(tokenUserInfoDto.getUserId(), contactId);
+		if (contact != null) {
+			userInfoVO.setContractStatus(contact.getStatus());
+		}
+		return getSuccessResponseVO(userInfoVO);
 	}
 
 	// 获取联系人信息(非群聊)

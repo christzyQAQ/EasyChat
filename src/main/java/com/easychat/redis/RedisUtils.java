@@ -145,7 +145,7 @@ public class RedisUtils<V> {
      * @param time 过期时间（秒），如果不设置过期时间传入 <= 0 的值
      * @return 插入是否成功
      */
-    public boolean lpushAll(String key, List<V > values, long time) {
+    public boolean lpushAll(String key, List<V> values, long time) {
         try {
             redisTemplate.opsForList().leftPushAll(key, values);
             if (time > 0) {

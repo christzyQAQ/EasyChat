@@ -91,13 +91,13 @@ public class AccountController extends BaseController{
 	public ResponseVO<?> register(@NotEmpty String checkCodeKey,
 								@NotEmpty @Email  String email,
 								@NotEmpty  String password,
-								@NotEmpty String nickname,
+								@NotEmpty String nickName,
 								@NotEmpty String checkCode ){	
 		try {
 			if(!checkCode.equalsIgnoreCase((String )redisUtils.get(Constants.REDIS_KEY_CHECK_CODE +checkCodeKey))) {
 				throw new BusinessException("图片验证码不正确");
 			}			
-			infoService.register(email, nickname, password);			
+			infoService.register(email, nickName, password);			
 			return getSuccessResponseVO(null);
 		} finally {
 			//验证码错误，从redis中删除验证码缓存
@@ -134,12 +134,9 @@ public class AccountController extends BaseController{
 	
 	@GlobalInterceptor
 	@RequestMapping("/getSysSetting")
-	public ResponseVO getSysSetting( ){
-				
+	public ResponseVO getSysSetting( ){	
 		return getSuccessResponseVO(redisComponent.getSysSetting());	
-				
 	}
-	
 	@RequestMapping("/test")
 	public ResponseVO test( ){
 			MessageSendDto sendDto =new MessageSendDto();	

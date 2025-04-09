@@ -156,16 +156,19 @@ public class ChannelContextUtils {
 
 	// 处理用户下线后的操作，包括清除用户上下文、更新用户信息、发送离线消息。
 	public void removeContext(Channel channel) {
+		if (channel == null) {
+			return;
+		}
 		String userId = getUserIdByChannel(channel);
-		if (StringTools.isEmpty(userId)) {
+		if (!StringTools.isEmpty(userId)) {
 			USER_CONTEXT_MAP.remove(userId);
 		}
-		redisComponent.removeHeartBeats(userId);
+		closeContext(userId);
+		redisComponent.cleanUserTokenByUserId(userId);
 		// 更新用户最后离线时间
 		Info info = new Info();
 		info.setLastOffTime(new Date());
 		infoMapper.updateByUserId(info, userId);
-
 	}
 
 	public void sendMessage(MessageSendDto messageSendDto) {

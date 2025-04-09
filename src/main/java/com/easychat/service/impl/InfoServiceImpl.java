@@ -64,29 +64,24 @@ public class InfoServiceImpl implements InfoService {
 	
 	final Logger log = LoggerFactory.getLogger(InfoServiceImpl.class);	
 
-	@Autowired
+	@Resource
 	private InfoMapper<Info, InfoQuery> infoMapper;
 	
 	@Resource
 	private ContactMapper contactMapper;
 
-	@Autowired
+	@Resource
 	private InfoBeautyMapper<InfoBeauty,InfoQuery> infoBeautyMapper;
-	
-	@Autowired 	
+
+	@Resource
 	private AppConfig appConfig;
-	
-	@Autowired
+
+	@Resource
 	private RedisComponent redisComponent;
 	
 	@Resource
 	private RedisUtils redisUtils;
-	
-	@Autowired
-	private RedisTemplate redisTemplate;
-	
-	@Resource
-	private ContactService contactService;
+
 	@Resource
 	private ContactApplyService contactApplyService;
 	
@@ -251,11 +246,6 @@ public class InfoServiceImpl implements InfoService {
 	{
 		Map<String, Object> result =new HashMap<>();
 		Info info=this.infoMapper.selectByEmail(email);
-//		if (null!=info||info.getPassword() == null ||!info.getPassword().equals(StringTools.encodeMd5(password))) {
-//			log.debug("数据库中的密码: {}", info.getPassword());
-//			log.debug("加密后的输入密码: {}", StringTools.encodeMd5(password));
-//			throw new BusinessException("账号或密码错误");
-//		}
 		// Debug log
 	    if (info == null) {
 	        log.debug("没有找到用户信息");
@@ -267,19 +257,18 @@ public class InfoServiceImpl implements InfoService {
 	        throw new BusinessException("账号或密码错误");
 	    }
 
-	    String encodedPassword = StringTools.encodeMd5(password);
 	    log.debug("数据库中的密码: {}", info.getPassword());
-	    log.debug("加密后的输入密码: {}", encodedPassword);
+	    log.debug("前端传入的密码: {}", password);
 
-	    if (!info.getPassword().equals(encodedPassword)) {
+	    if (!info.getPassword().equals(password)) {
 	        log.debug("密码不匹配");
 	        throw new BusinessException("账号或密码错误");
 	    }
 		if (UserStatusEnum.DISABLE.equals(info.getStatus())) {
 			throw new BusinessException("账号已禁用");
 		}		
-		//TODO 查询我的群组	
-		
+		//TODO 查询我的群组
+
 		//查询我的联系人
 		ContactQuery contactQuery=new ContactQuery();
 		contactQuery.setUserId(info.getUserId());

@@ -13,6 +13,7 @@ import com.easychat.websocket.ChannelContextUtils;
 
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
@@ -43,16 +44,16 @@ public class HandlerWebSocket extends SimpleChannelInboundHandler<TextWebSocketF
 	 */
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
-		logger.info("有新的连接加入...");	
+		String userId=channelContexUtils.getUserIdByChannel(ctx.channel());
+		logger.info("用户{}连接成功...",userId);
 	}
 
 	@Override
 	public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-		logger.info("有连接断开...");
+		String userId=channelContexUtils.getUserIdByChannel(ctx.channel());
+		logger.info("用户{}断开连接...",userId);
 		channelContexUtils.removeContext(ctx.channel());
 	}
-
-
 
 	@Override
 	protected void channelRead0(ChannelHandlerContext ctx, TextWebSocketFrame textWebSocketFrame) throws Exception {
@@ -67,8 +68,9 @@ public class HandlerWebSocket extends SimpleChannelInboundHandler<TextWebSocketF
 		if (evt instanceof WebSocketServerProtocolHandler.HandshakeComplete) {
 			WebSocketServerProtocolHandler.HandshakeComplete complete
 			=(WebSocketServerProtocolHandler.HandshakeComplete) evt;
-			String url =complete.requestUri();
+			String url =complete.requestUri();			
 			String token =getToken(url);
+			logger.info("token=",url);
 			if(token==null) {
 				ctx.channel().close();
 				return;
@@ -78,8 +80,7 @@ public class HandlerWebSocket extends SimpleChannelInboundHandler<TextWebSocketF
 				ctx.channel().close();
 				return;
 			}
-			channelContexUtils.addContext(tokenUserInfoDto.getUserId(), ctx.channel());			
-					
+			channelContexUtils.addContext(tokenUserInfoDto.getUserId(), ctx.channel());						
 		}
 		
 	}
@@ -101,7 +102,7 @@ public class HandlerWebSocket extends SimpleChannelInboundHandler<TextWebSocketF
 		}
 		return param[1];			
 	}
-				
+					
 }
 
 

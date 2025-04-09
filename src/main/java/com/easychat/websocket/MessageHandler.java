@@ -49,6 +49,5 @@ public class MessageHandler {
 		RTopic rTopic =redissonClient.getTopic(MESSAGE_TOPIC);
 		rTopic.publish(messageSendDto);
 	}
-	
 
 }

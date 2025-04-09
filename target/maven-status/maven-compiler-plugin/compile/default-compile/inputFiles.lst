@@ -8,6 +8,7 @@ C:\Eclipse\Space\easychat\src\main\java\com\easychat\entity\po\Info.java
 C:\Eclipse\Space\easychat\src\main\java\com\easychat\entity\query\SimplePage.java
 C:\Eclipse\Space\easychat\src\main\java\com\easychat\service\UpdateService.java
 C:\Eclipse\Space\easychat\src\main\java\com\easychat\entity\vo\UpdateVO.java
+C:\Eclipse\Space\easychat\src\main\java\com\easychat\annotation\GlobalInterceptor.java
 C:\Eclipse\Space\easychat\src\main\java\com\easychat\controller\InfoController.java
 C:\Eclipse\Space\easychat\src\main\java\com\easychat\service\impl\MessageServiceImpl.java
 C:\Eclipse\Space\easychat\src\main\java\com\easychat\service\GroupInfoService.java
@@ -18,10 +19,12 @@ C:\Eclipse\Space\easychat\src\main\java\com\easychat\redis\RedisComponent.java
 C:\Eclipse\Space\easychat\src\main\java\com\easychat\exception\BusinessException.java
 C:\Eclipse\Space\easychat\src\main\java\com\easychat\redis\RedisConnectionChecker.java
 C:\Eclipse\Space\easychat\src\main\java\com\easychat\service\impl\ContactApplyServiceImpl.java
+C:\Eclipse\Space\easychat\src\main\java\com\easychat\websocket\ChannelContextUtils.java
 C:\Eclipse\Space\easychat\src\main\java\com\easychat\EasyChatApplication.java
 C:\Eclipse\Space\easychat\src\main\java\com\easychat\controller\AdminGroupController.java
 C:\Eclipse\Space\easychat\src\main\java\com\easychat\enums\JoinTypeEnum.java
 C:\Eclipse\Space\easychat\src\main\java\com\easychat\websocket\netty\HandlerWebSocket.java
+C:\Eclipse\Space\easychat\src\main\java\com\easychat\controller\SessionController.java
 C:\Eclipse\Space\easychat\src\main\java\com\easychat\controller\GroupInfoController.java
 C:\Eclipse\Space\easychat\src\main\java\com\easychat\entity\query\GroupInfoQuery.java
 C:\Eclipse\Space\easychat\src\main\java\com\easychat\service\impl\InfoBeautyServiceImpl.java
@@ -58,7 +61,6 @@ C:\Eclipse\Space\easychat\src\main\java\com\easychat\enums\MessageStatusEnum.jav
 C:\Eclipse\Space\easychat\src\main\java\com\easychat\enums\PageSize.java
 C:\Eclipse\Space\easychat\src\main\java\com\easychat\entity\query\ContactQuery.java
 C:\Eclipse\Space\easychat\src\main\java\com\easychat\dto\UserContactSearchResultDto.java
-C:\Eclipse\Space\easychat\src\main\java\com\easychat\dto\WsInitDate.java
 C:\Eclipse\Space\easychat\src\main\java\com\easychat\entity\query\InfoQuery.java
 C:\Eclipse\Space\easychat\src\main\java\com\easychat\controller\UpdateController.java
 C:\Eclipse\Space\easychat\src\main\java\com\easychat\entity\po\GroupInfo.java
@@ -69,7 +71,6 @@ C:\Eclipse\Space\easychat\src\main\java\com\easychat\service\impl\SessionService
 C:\Eclipse\Space\easychat\src\main\java\com\easychat\entity\query\InfoBeautyQuery.java
 C:\Eclipse\Space\easychat\src\main\java\com\easychat\entity\constants\Constants.java
 C:\Eclipse\Space\easychat\src\main\java\com\easychat\mappers\SessionMapper.java
-C:\Eclipse\Space\easychat\src\main\java\com\easychat\annotation\GlobalIntercepter.java
 C:\Eclipse\Space\easychat\src\main\java\com\easychat\service\impl\ContactServiceImpl.java
 C:\Eclipse\Space\easychat\src\main\java\com\easychat\service\SessionUserService.java
 C:\Eclipse\Space\easychat\src\main\java\com\easychat\entity\vo\UserInfoVO.java
@@ -83,14 +84,15 @@ C:\Eclipse\Space\easychat\src\main\java\com\easychat\enums\UserStatusEnum.java
 C:\Eclipse\Space\easychat\src\main\java\com\easychat\mappers\InfoMapper.java
 C:\Eclipse\Space\easychat\src\main\java\com\easychat\redis\RedisUtils.java
 C:\Eclipse\Space\easychat\src\main\java\com\easychat\entity\po\InfoBeauty.java
+C:\Eclipse\Space\easychat\src\main\java\com\easychat\dto\WsInitData.java
 C:\Eclipse\Space\easychat\src\main\java\com\easychat\entity\query\UpdateQuery.java
 C:\Eclipse\Space\easychat\src\main\java\com\easychat\service\impl\SessionUserServiceImpl.java
 C:\Eclipse\Space\easychat\src\main\java\com\easychat\enums\BeautyAccountStatusEnum.java
 C:\Eclipse\Space\easychat\src\main\java\com\easychat\controller\InfoBeautyController.java
 C:\Eclipse\Space\easychat\src\main\java\com\easychat\entity\po\Update.java
 C:\Eclipse\Space\easychat\src\main\java\com\easychat\entity\query\SessionQuery.java
-C:\Eclipse\Space\easychat\src\main\java\com\easychat\websocket\ChannelContexUtils.java
 C:\Eclipse\Space\easychat\src\main\java\com\easychat\service\MessageService.java
+C:\Eclipse\Space\easychat\src\main\java\com\easychat\enums\UserSessionEnum.java
 C:\Eclipse\Space\easychat\src\main\java\com\easychat\enums\AppUpdateStatusEnum.java
 C:\Eclipse\Space\easychat\src\main\java\com\easychat\mappers\ContactApplyMapper.java
 C:\Eclipse\Space\easychat\src\main\java\com\easychat\entity\query\SessionUserQuery.java

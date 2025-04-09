@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import javax.annotation.Resource;
 
+import com.easychat.utils.CopyTools;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -178,7 +179,6 @@ public class GroupInfoServiceImpl implements GroupInfoService {
 			if(avatarFile==null) {
 				throw new BusinessException(ResponseCodeEnum.CODE_600);
 			}
-			
 			groupinfo.setCreateTime(curDate);			
 			groupinfo.setGroupId(StringTools.getGroupId());
 			this.groupInfoMapper.insert(groupinfo);
@@ -256,9 +256,8 @@ public class GroupInfoServiceImpl implements GroupInfoService {
 		}
 		
 		if (avatarFile==null) {
-			return;			
+			return;
 		}
-		
 	try {
 		String baseFolder= appConfig.getProjectFloder()+ Constants.FILE_FOLDER_FILE;
 		System.out.println("基础路径为："+ baseFolder);
@@ -281,16 +280,13 @@ public class GroupInfoServiceImpl implements GroupInfoService {
 		e.printStackTrace();
 		 throw new RuntimeException("Failed to save avatar file", e);
 	}
-		
-		
-		
-		
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public void dissolutionGroup(String groupOwnerId, String groupId) {
 		GroupInfo dbInfo = groupInfoMapper.selectByGroupId(groupId);
-		if(dbInfo.getGroupId()!=groupOwnerId) {
+		if(!dbInfo.getGroupOwnerId().equals(groupOwnerId)) {
 			throw new BusinessException(ResponseCodeEnum.CODE_600);
 		}
 		//删除群组
@@ -306,10 +302,30 @@ public class GroupInfoServiceImpl implements GroupInfoService {
 		Contact updadeContact=new Contact();
 		updadeContact.setStatus(UserContactStatusEnum.DEL.getStatus());
 		contactMapper.updateByQuery(updadeContact, contactQuery);
-		
-		//TODO 移除相关群员的联系人缓存		
-		//TODO 发消息：1、更新会话消息，2：记录群消息，3：发送群解散通知消息
-		
-	}
 
+		List<Contact> contactList = contactMapper.selectList(contactQuery);
+		for(Contact contact:contactList) {
+			redisComponent.removeUserContactList(contact.getUserId(), contact.getContactId());
+
+		}
+		String sessionId=StringTools.getChatSessionId4Group(groupId);
+		Date curDate=new Date();
+		String messageContent=MessageTypeEnum.DISSOLUSION_GROUP.getInitMessage();
+		Session session=new Session();
+		session.setLastMessage(messageContent);
+		session.setLastRecieveTime(curDate.getTime());
+		sessionMapper.updateBySessionId(session, sessionId);
+
+		Message message =new Message();
+		message.setSessionId(sessionId);
+		message.setContactId(groupId);
+		message.setSendTime(curDate.getTime());
+		message.setMessageType(MessageTypeEnum.DISSOLUSION_GROUP.getType());
+		message.setStatus(MessageStatusEnum.SENDED.getStatus());
+		message.setMessageContent(messageContent);
+		message.setContactType(UserContactTypeEnum.GROUP.getType());
+		messageMapper.insert(message);
+		MessageSendDto messageSendDto = CopyTools.copy(message, MessageSendDto.class);
+		messageHandler.sendMessage(messageSendDto);
+	}
 }

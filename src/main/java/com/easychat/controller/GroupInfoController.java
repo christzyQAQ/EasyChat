@@ -80,7 +80,7 @@ public class GroupInfoController extends BaseController {
 		TokenUserInfoDto tokenUserInfoDto=getTokenUserInfo(request);
 		GroupInfoQuery groupInfoQuery=new GroupInfoQuery();
 		groupInfoQuery.setGroupOwnerId(tokenUserInfoDto.getUserId());
-		groupInfoQuery.setOrderBy("creat_time desc");
+		groupInfoQuery.setOrderBy("create_time desc");
 		List<GroupInfo> groupInfoList=this.groupInfoService.findListByParam(groupInfoQuery);
 		
 		return getSuccessResponseVO(groupInfoList);
@@ -142,6 +142,18 @@ public class GroupInfoController extends BaseController {
 				
 	}
 
+	@RequestMapping("/dissolutionGroup")
+	@GlobalInterceptor
+	public ResponseVO dissolutionGroup(HttpServletRequest request,
+										@NotEmpty String groupId) {
+		TokenUserInfoDto tokenUserInfoDto=getTokenUserInfo(request);
+		GroupInfo groupInfo=getGroupDetailCommen(request, groupId);
+		if(!tokenUserInfoDto.getUserId().equals(groupInfo.getGroupOwnerId())) {
+			throw new BusinessException("你不是群主，不能解散群聊");
+		}
+		groupInfoService.dissolutionGroup( tokenUserInfoDto.getUserId(), groupId);
+		return getSuccessResponseVO(null);
+	}
 }
 
 

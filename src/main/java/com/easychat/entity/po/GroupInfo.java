@@ -3,15 +3,13 @@ package com.easychat.entity.po;
 import java.io.Serializable;
 import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
-
-import org.omg.CORBA.PRIVATE_MEMBER;
 import org.springframework.format.annotation.DateTimeFormat;
 import com.easychat.enums.DateTimePatternEnum;
 import com.easychat.utils.DateUtil;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 /**
  * 
- * @auther: 系统
+ * @author: 系统
  * @date: 2024-07-21 16:19
  */
 public class GroupInfo implements Serializable {

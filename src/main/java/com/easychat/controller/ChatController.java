@@ -60,8 +60,7 @@ public class ChatController extends BaseController {
 		 * 保存消息
 		 */
 		Message message = new Message();
-		TokenUserInfoDto tokenUserInfoDto = getTokenUserInfo(request);
-		MessageSendDto messageSendDto = new MessageSendDto();
+		TokenUserInfoDto tokenUserInfoDto = getTokenUserInfo(request);		
 		message.setContactId(contactId);
 		message.setSendUserId(tokenUserInfoDto.getUserId());
 		message.setSendUserNickName(tokenUserInfoDto.getNickName());

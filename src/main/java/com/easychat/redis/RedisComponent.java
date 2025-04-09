@@ -36,7 +36,6 @@ public class RedisComponent {
 
 	// 获取用户心跳防止客户端掉线
 	public String getUserHeartBeat(String userId) {
-
 		return (String) redisUtils.get(Constants.REDIS_KEY_WS_USER_HEART_BEAT + userId);
 	}
 
@@ -47,6 +46,7 @@ public class RedisComponent {
 	public void removeHeartBeats(String userId) {
 		redisUtils.delete(Constants.REDIS_KEY_WS_USER_HEART_BEAT + userId);
 	}
+
 
 	public void saveTokenUserInfoDto(TokenUserInfoDto tokenUserInfoDto) {
 		redisUtils.setex(Constants.REDIS_KEY_WS_TOKEN + tokenUserInfoDto.getToken(), tokenUserInfoDto,
@@ -113,6 +113,10 @@ public class RedisComponent {
 		}
 		redisUtils.delete(Constants.REDIS_KEY_WS_TOKEN_USERID+token);
 	}
+
+	 public void removeUserContactList(String userId, String contactId){
+		redisUtils.remove(Constants.REDIS_KEY_USER_CONTACT + userId, contactId);
+	 }
 
 
 }

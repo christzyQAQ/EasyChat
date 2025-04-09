@@ -26,8 +26,6 @@ import com.easychat.websocket.netty.NettyWebSocketStarter;
 @Component("initRun")
 //应用启动后执行的一些初始化操作
 public class InitRun implements ApplicationRunner {
-
-	
 	private static final Logger logger=LoggerFactory.getLogger(InitRun.class);
 	
 	@Resource
@@ -53,5 +51,4 @@ public class InitRun implements ApplicationRunner {
 			logger.error("服务启动失败");
 		}
 	}
-
 }

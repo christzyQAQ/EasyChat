@@ -175,7 +175,7 @@
                 status = #{contact.status},
             </if>
 
-            <if test="contact.contact_type != null">
+            <if test="contact.contactType != null">
                 last_update_time = #{contact.last_update_time},
             </if>
             

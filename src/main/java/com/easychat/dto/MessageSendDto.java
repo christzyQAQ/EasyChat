@@ -52,7 +52,7 @@ public class MessageSendDto<T> implements Serializable {
 	private Integer fileType;
 	
 	//群员数
-	private Integer memmberCount;
+	private Integer memberCount;
 
 	public Long getMessageId() {
 		return messageId;
@@ -185,12 +185,12 @@ public class MessageSendDto<T> implements Serializable {
 		this.fileType = fileType;
 	}
 
-	public Integer getMemmberCount() {
-		return memmberCount;
+	public Integer getMemberCount() {
+		return memberCount;
 	}
 
-	public void setMemmberCount(Integer memmberCount) {
-		this.memmberCount = memmberCount;
+	public void setMemberCount(Integer memberCount) {
+		this.memberCount = memberCount;
 	}
 	
 	

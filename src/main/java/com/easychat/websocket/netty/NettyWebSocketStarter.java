@@ -12,6 +12,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import com.easychat.entity.config.AppConfig;
+import com.easychat.exception.BusinessException;
 import com.easychat.utils.StringTools;
 
 import io.lettuce.core.event.Event;
@@ -43,7 +44,7 @@ public class NettyWebSocketStarter implements Runnable{
 	
 	private static final Logger logger=LoggerFactory.getLogger(NettyWebSocketStarter.class);
 
-	private static  EventLoopGroup bossGroup=new NioEventLoopGroup() ;
+	private static  EventLoopGroup bossGroup=new NioEventLoopGroup(1);
 	
 	private static EventLoopGroup workGroup =new NioEventLoopGroup();
 	
@@ -53,11 +54,7 @@ public class NettyWebSocketStarter implements Runnable{
 	@Resource
 	private AppConfig appConfig;
 	
-	@PreDestroy
-	private void close() {
-		bossGroup.shutdownGracefully();
-		workGroup.shutdownGracefully();
-	}
+	
 	@Override
 	public void run() {
 		
@@ -68,7 +65,7 @@ public class NettyWebSocketStarter implements Runnable{
 			handler(new LoggingHandler(LogLevel.DEBUG)).childHandler(new ChannelInitializer() {
 
 				@Override
-				protected void initChannel(Channel channel) throws Exception {
+				protected void initChannel(Channel channel) throws BusinessException {
 					ChannelPipeline pipeline = channel.pipeline();
 					//设置几个重要的处理器
 					//对http协议的支持，使用http的编码器、解码器
@@ -77,17 +74,15 @@ public class NettyWebSocketStarter implements Runnable{
 					//保证接受Http请求的完整性
 					pipeline.addLast(new HttpObjectAggregator(64*1024));
 					//心跳  long readerIdleTime, long writerIdleTime, long allIdleTime, TimeUnit unit
-					//readerIdleTime 读超时时间，即测试端一定时间内未接收到测试端的消息
-					//writerIdleTime 写超时时间，即测试端一定时间内未向被测试端发送消息
+					//readerIdleTime 读超时时间，即测试端一定时间内未接收到被测试端的消息
+					//writerIdleTime 写超时时间，即测试端一定时间内未向被被测试端发送消息
 					//allIdleTime 所有类型的超时时间
 					//unit 单位时间 设为秒
-					pipeline.addLast(new IdleStateHandler(600, 0, 0, TimeUnit.SECONDS));
+					pipeline.addLast(new IdleStateHandler(6, 0, 0, TimeUnit.SECONDS));
 					pipeline.addLast(new HandlerHeartBeat());
 					//将http协议升级为ws协议，对websocket支持
 					pipeline.addLast(new WebSocketServerProtocolHandler("/ws",null,true,64*1024,true,true,10000L));
 					pipeline.addLast(handlerWebSocket); // 添加消息处理器
-					
-					
 				}
 			} ); 
 			Integer WsPort=appConfig.getWsport();
@@ -97,19 +92,12 @@ public class NettyWebSocketStarter implements Runnable{
 			}
 			ChannelFuture channelFuture =serverBootstrap.bind(WsPort).sync();
 			logger.info("netty启动成功,端口为："+appConfig.getWsport());
-			channelFuture.channel().closeFuture().sync();
-			
-			
+			channelFuture.channel().closeFuture().sync();	
 		} catch (Exception e) {
 			logger.error("启动netty失败",e);
 		}finally {
 			bossGroup.shutdownGracefully();
 			workGroup.shutdownGracefully();
 		}
-	}
-	
-	
-		
-		
-	
+	}	
 }

@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.NotEmpty;
 
+import com.easychat.websocket.ChannelContextUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -42,6 +43,9 @@ public class InfoController extends BaseController {
 
 	@Resource
 	private RedisUtils redisUtils;
+
+	@Resource
+	ChannelContextUtils channelContextUtils;
 
 	@RequestMapping("loadDataList")
 	public ResponseVO loadDataList(InfoQuery query) {
@@ -144,7 +148,7 @@ public class InfoController extends BaseController {
 	public ResponseVO saveUserInfo(HttpServletRequest request, Info info, MultipartFile avatarFile,
 			MultipartFile avatarCover) throws IOException {
 		TokenUserInfoDto tokenUserInfoDto = getTokenUserInfo(request);
-		// 用户无法从客户端修改的信息需要置空，防止被其他人修改传入
+		// 用户无法从客户端修改的信息需要置空，防止被其他人修改传入 
 		info.setUserId(tokenUserInfoDto.getUserId());
 		info.setCreateTime(null);
 		info.setEmail(null);
@@ -170,7 +174,7 @@ public class InfoController extends BaseController {
 				throw new BusinessException("图片验证码不正确");
 			}
 			infoService.modifyPassword(oldPassword, newPassword, tokenUserInfoDto);
-			// TODO 强制退出重新登录
+			channelContextUtils.closeContext(tokenUserInfoDto.getUserId());
 			return getSuccessResponseVO(null);
 		} finally {
 			// 验证码错误，从redis中删除验证码缓存
@@ -190,7 +194,6 @@ public class InfoController extends BaseController {
 		redisUtils.delete(Constants.REDIS_KEY_WS_TOKEN_USERID+ tokenUserInfoDto.getUserId());
 		redisUtils.delete(Constants.REDIS_KEY_WS_USER_HEART_BEAT+tokenUserInfoDto.getUserId());
 		return getSuccessResponseVO("已退出登录");
-	
 	}
 	
 }
