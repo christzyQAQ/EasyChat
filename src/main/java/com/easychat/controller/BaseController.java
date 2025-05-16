@@ -25,12 +25,11 @@ public class BaseController {
         responseVO.setData(t);
         return responseVO;
     }
-    //从http头部请求获得token字符对应的信息
+        //从http头部请求获得token字符对应的信息
     	protected  TokenUserInfoDto  getTokenUserInfo(HttpServletRequest request) {
     	String token = request.getHeader("token");
     	TokenUserInfoDto tokenUserInfoDto =(TokenUserInfoDto) redisUtils.get(Constants.REDIS_KEY_WS_TOKEN+token);
     	return tokenUserInfoDto;
-    
     }
     
     
