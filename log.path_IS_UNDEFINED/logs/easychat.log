@@ -6,3 +6,39 @@
 2024-07-22 22:53:16 [DEBUG][org.springframework.web.servlet.mvc.method.annotation.RequestResponseBodyMethodProcessor][writeWithMessageConverters][268]-> Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/json, application/*+json]
 2024-07-22 22:53:16 [DEBUG][org.springframework.web.servlet.mvc.method.annotation.RequestResponseBodyMethodProcessor][traceDebug][108]-> Writing [com.easychat.entity.vo.ResponseVO@745e0063]
 2024-07-22 22:53:16 [DEBUG][org.springframework.web.servlet.DispatcherServlet][logResult][1131]-> Completed 200 OK
+2025-05-27 14:34:12 [DEBUG][org.springframework.boot.availability.ApplicationAvailabilityBean][onApplicationEvent][77]-> Application availability state ReadinessState changed from ACCEPTING_TRAFFIC to REFUSING_TRAFFIC
+2025-05-27 14:34:12 [DEBUG][org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext][doClose][1049]-> Closing org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@5ace1ed4, started on Tue May 27 14:21:02 CST 2025
+2025-05-27 14:34:12 [DEBUG][org.springframework.context.support.DefaultLifecycleProcessor][stop][365]-> Stopping beans in phase 2147483647
+2025-05-27 14:34:12 [DEBUG][org.springframework.context.support.DefaultLifecycleProcessor][lambda$doStop$3][238]-> Bean 'webServerGracefulShutdown' completed its stop procedure
+2025-05-27 14:34:12 [DEBUG][org.springframework.context.support.DefaultLifecycleProcessor][stop][365]-> Stopping beans in phase 2147483646
+2025-05-27 14:34:13 [DEBUG][org.springframework.context.support.DefaultLifecycleProcessor][lambda$doStop$3][238]-> Bean 'webServerStartStop' completed its stop procedure
+2025-05-27 14:34:13 [DEBUG][org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler][shutdown][218]-> Shutting down ExecutorService 'taskScheduler'
+2025-05-27 14:34:13 [DEBUG][org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor][shutdown][218]-> Shutting down ExecutorService 'applicationTaskExecutor'
+2025-05-27 14:34:13 [DEBUG][io.netty.buffer.PoolThreadCache][free][247]-> Freed 2 thread-local buffer(s) from thread: redisson-netty-6-2
+2025-05-27 14:34:13 [DEBUG][io.netty.buffer.PoolThreadCache][free][247]-> Freed 2 thread-local buffer(s) from thread: redisson-netty-6-4
+2025-05-27 14:34:13 [DEBUG][io.netty.buffer.PoolThreadCache][free][247]-> Freed 2 thread-local buffer(s) from thread: redisson-netty-6-3
+2025-05-27 14:34:13 [DEBUG][io.netty.buffer.PoolThreadCache][free][247]-> Freed 2 thread-local buffer(s) from thread: redisson-netty-6-6
+2025-05-27 14:34:13 [DEBUG][io.netty.buffer.PoolThreadCache][free][247]-> Freed 2 thread-local buffer(s) from thread: redisson-netty-6-5
+2025-05-27 14:34:13 [DEBUG][io.netty.buffer.PoolThreadCache][free][247]-> Freed 2 thread-local buffer(s) from thread: redisson-netty-6-9
+2025-05-27 14:34:13 [DEBUG][io.netty.buffer.PoolThreadCache][free][247]-> Freed 2 thread-local buffer(s) from thread: redisson-netty-6-7
+2025-05-27 14:34:13 [DEBUG][io.netty.buffer.PoolThreadCache][free][247]-> Freed 2 thread-local buffer(s) from thread: redisson-netty-6-8
+2025-05-27 14:34:13 [DEBUG][io.netty.buffer.PoolThreadCache][free][247]-> Freed 2 thread-local buffer(s) from thread: redisson-netty-6-10
+2025-05-27 14:34:13 [DEBUG][io.netty.buffer.PoolThreadCache][free][247]-> Freed 2 thread-local buffer(s) from thread: redisson-netty-6-11
+2025-05-27 14:34:13 [DEBUG][io.netty.buffer.PoolThreadCache][free][247]-> Freed 2 thread-local buffer(s) from thread: redisson-netty-6-13
+2025-05-27 14:34:13 [DEBUG][io.netty.buffer.PoolThreadCache][free][247]-> Freed 2 thread-local buffer(s) from thread: redisson-netty-6-14
+2025-05-27 14:34:13 [DEBUG][io.netty.buffer.PoolThreadCache][free][247]-> Freed 2 thread-local buffer(s) from thread: redisson-netty-6-15
+2025-05-27 14:34:13 [DEBUG][io.netty.buffer.PoolThreadCache][free][247]-> Freed 2 thread-local buffer(s) from thread: redisson-netty-6-16
+2025-05-27 14:34:13 [DEBUG][io.netty.buffer.PoolThreadCache][free][247]-> Freed 2 thread-local buffer(s) from thread: redisson-netty-6-17
+2025-05-27 14:34:13 [DEBUG][io.netty.buffer.PoolThreadCache][free][247]-> Freed 2 thread-local buffer(s) from thread: redisson-netty-6-18
+2025-05-27 14:34:13 [DEBUG][io.netty.buffer.PoolThreadCache][free][247]-> Freed 2 thread-local buffer(s) from thread: redisson-netty-6-20
+2025-05-27 14:34:13 [DEBUG][io.netty.buffer.PoolThreadCache][free][247]-> Freed 2 thread-local buffer(s) from thread: redisson-netty-6-21
+2025-05-27 14:34:13 [DEBUG][io.netty.buffer.PoolThreadCache][free][247]-> Freed 2 thread-local buffer(s) from thread: redisson-netty-6-12
+2025-05-27 14:34:13 [DEBUG][io.netty.buffer.PoolThreadCache][free][247]-> Freed 2 thread-local buffer(s) from thread: redisson-netty-6-19
+2025-05-27 14:34:13 [DEBUG][io.netty.buffer.PoolThreadCache][free][247]-> Freed 2 thread-local buffer(s) from thread: redisson-netty-6-23
+2025-05-27 14:34:13 [DEBUG][io.netty.buffer.PoolThreadCache][free][247]-> Freed 2 thread-local buffer(s) from thread: redisson-netty-6-25
+2025-05-27 14:34:13 [DEBUG][io.netty.buffer.PoolThreadCache][free][247]-> Freed 2 thread-local buffer(s) from thread: redisson-netty-6-26
+2025-05-27 14:34:13 [DEBUG][io.netty.buffer.PoolThreadCache][free][247]-> Freed 2 thread-local buffer(s) from thread: redisson-netty-6-22
+2025-05-27 14:34:13 [DEBUG][io.netty.buffer.PoolThreadCache][free][247]-> Freed 2 thread-local buffer(s) from thread: redisson-netty-6-24
+2025-05-27 14:34:13 [DEBUG][io.netty.buffer.PoolThreadCache][free][247]-> Freed 12 thread-local buffer(s) from thread: lettuce-nioEventLoop-9-1
+2025-05-27 14:34:13 [INFO][com.zaxxer.hikari.HikariDataSource][close][350]-> HikariCPDatasource - Shutdown initiated...
+2025-05-27 14:34:13 [INFO][com.zaxxer.hikari.HikariDataSource][close][352]-> HikariCPDatasource - Shutdown completed.

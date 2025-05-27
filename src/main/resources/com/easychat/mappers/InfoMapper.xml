@@ -29,7 +29,7 @@
 		<!--地区编号-->
 		<result column="area_code" property="areaCode"/>
 		<!--最后离线时间-->
-		<result column="last_off_time" property="lastOffTime"/>
+		<result column="last_off_time" property="lastOffTime" typeHandler="com.easychat.config.LongToTimestampTypeHandler"/>
 	</resultMap>
 
 	<!--通用查询结果列-->
@@ -232,7 +232,7 @@
 				#{bean.areaCode},
 			</if>
 			<if test="bean.lastOffTime != null">
-				#{bean.lastOffTime},
+				#{bean.lastOffTime,typeHandler=com.easychat.config.LongToTimestampTypeHandler},
 			</if>
 		</trim>
 	</insert>
@@ -318,7 +318,7 @@
 				#{bean.areaCode},
 			</if>
 			<if test="bean.lastOffTime != null">
-				#{bean.lastOffTime},
+				#{bean.lastOffTime,typeHandler=com.easychat.config.LongToTimestampTypeHandler},
 			</if>
 		</trim>
 		<trim prefix="ON DUPLICATE KEY UPDATE" suffix="" suffixOverrides=",">
@@ -361,14 +361,14 @@
 	<insert id="insertBatch" parameterType="com.easychat.entity.po.Info">
 		insert into user_info(user_id,email,nick_name,join_type,sex,password,personal_signature,status,create_time,last_login_time,area_name,area_code,last_off_time) values 
 		<foreach collection="list" item="item" separator=",">
-			(#{item.userId},#{item.email},#{item.nickName},#{item.joinType},#{item.sex},#{item.password},#{item.personalSignature},#{item.status},#{item.createTime},#{item.lastLoginTime},#{item.areaName},#{item.areaCode},#{item.lastOffTime})
+			(#{item.userId},#{item.email},#{item.nickName},#{item.joinType},#{item.sex},#{item.password},#{item.personalSignature},#{item.status},#{item.createTime},#{item.lastLoginTime},#{item.areaName},#{item.areaCode},#{item.lastOffTime,typeHandler=com.easychat.config.LongToTimestampTypeHandler})
 		</foreach>
 	</insert>
 
 	<insert id="insertOrUpdateBatch" parameterType="com.easychat.entity.po.Info">
 		insert into user_info(user_id,email,nick_name,join_type,sex,password,personal_signature,status,create_time,last_login_time,area_name,area_code,last_off_time) values 
 		<foreach collection="list" item="item" separator=",">
-			(#{item.userId},#{item.email},#{item.nickName},#{item.joinType},#{item.sex},#{item.password},#{item.personalSignature},#{item.status},#{item.createTime},#{item.lastLoginTime},#{item.areaName},#{item.areaCode},#{item.lastOffTime})
+			(#{item.userId},#{item.email},#{item.nickName},#{item.joinType},#{item.sex},#{item.password},#{item.personalSignature},#{item.status},#{item.createTime},#{item.lastLoginTime},#{item.areaName},#{item.areaCode},#{item.lastOffTime,typeHandler=com.easychat.config.LongToTimestampTypeHandler})
 		</foreach>
 		ON DUPLICATE KEY UPDATE
 		user_id = VALUES(user_id),email = VALUES(email),nick_name = VALUES(nick_name),join_type = VALUES(join_type),sex = VALUES(sex),password = VALUES(password),personal_signature = VALUES(personal_signature),status = VALUES(status),create_time = VALUES(create_time),last_login_time = VALUES(last_login_time),area_name = VALUES(area_name),area_code = VALUES(area_code),last_off_time = VALUES(last_off_time)
@@ -420,7 +420,7 @@
 				area_code = #{bean.areaCode},
 			</if>
 			<if test="bean.lastOffTime != null">
-				last_off_time = #{bean.lastOffTime},
+				last_off_time = #{bean.lastOffTime,typeHandler=com.easychat.config.LongToTimestampTypeHandler},
 			</if>
 		</set>
 		where user_id=#{userId}
@@ -477,7 +477,7 @@
 				area_code = #{bean.areaCode},
 			</if>
 			<if test="bean.lastOffTime != null">
-				last_off_time = #{bean.lastOffTime},
+				last_off_time = #{bean.lastOffTime,typeHandler=com.easychat.config.LongToTimestampTypeHandler},
 			</if>
 		</set>
 		where email=#{email}
