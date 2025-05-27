@@ -10,6 +10,7 @@ package com.easychat.controller;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.OutputStream;
+import java.net.URLEncoder;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -92,7 +93,7 @@ public class ChatController extends BaseController {
 			@NotEmpty boolean showCover) {
 		TokenUserInfoDto tokenUserInfoDto = getTokenUserInfo(request);
 		OutputStream out = null;
-		FileInputStream in;
+		FileInputStream in = null;
 		try {
 			File file;
 			if (StringTools.isNumber(fileId)) {
@@ -107,10 +108,37 @@ public class ChatController extends BaseController {
 				} else {
 					messageService.downloadFile(tokenUserInfoDto, Long.parseLong(fileId), showCover);
 				}
-				response.setContentType("application/x-msdownload;charset=UTF-8");
-				response.setHeader("Content-disposition", "attachment;");
+				
+				// 设置正确的Content-Type，根据文件类型设置
+				String fileName = file.getName();
+				// 设置文件名编码，防止中文乱码
+				String encodedFileName = URLEncoder.encode(fileName, "UTF-8").replaceAll("\\+", "%20");
+				
+				// 根据文件扩展名设置不同的Content-Type
+				if (fileName.toLowerCase().endsWith(".xlsx")) {
+					response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+				} else if (fileName.toLowerCase().endsWith(".xls")) {
+					response.setContentType("application/vnd.ms-excel");
+				} else if (fileName.toLowerCase().endsWith(".pdf")) {
+					response.setContentType("application/pdf");
+				} else if (fileName.toLowerCase().endsWith(".doc")) {
+					response.setContentType("application/msword");
+				} else if (fileName.toLowerCase().endsWith(".docx")) {
+					response.setContentType("application/vnd.openxmlformats-officedocument.wordprocessingml.document");
+				} else if (fileName.toLowerCase().endsWith(".txt")) {
+					response.setContentType("text/plain");
+				} else {
+					response.setContentType("application/octet-stream");
+				}
+				
+				// 设置Content-Disposition头，指定文件名
+				response.setHeader("Content-Disposition", "attachment; filename=\"" + encodedFileName + "\"");
 				response.setContentLengthLong(file.length());
+				
+				// 初始化输出流
+				out = response.getOutputStream();
 				in = new FileInputStream(file);
+				
 				byte[] byteData = new byte[1024];
 				int len;
 				while ((len = in.read(byteData)) != -1) {
@@ -125,6 +153,13 @@ public class ChatController extends BaseController {
 			if (out != null) {
 				try {
 					out.close();
+				} catch (Exception e) {
+					logger.error("IO异常", e);
+				}
+			}
+			if (in != null) {
+				try {
+					in.close(); // 确保输入流也被关闭
 				} catch (Exception e) {
 					logger.error("IO异常", e);
 				}
